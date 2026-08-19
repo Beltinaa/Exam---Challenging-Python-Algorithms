@@ -29,6 +29,47 @@ def prism_detector(grid: list[str], pattern: str) -> list[tuple[int, int, str]]:
 
     return result
 
+print("more understandable wayyyyyyyyyyyyyyyyy")
+def prism_detector(grid, pattern):
+    if not grid or not pattern:
+        return []
+
+    result = []
+    directions = {
+        "H": (0, 1),
+        "H-": (0, -1),
+        "V": (1, 0),
+        "V-": (-1, 0),
+        "D1": (1, 1),
+        "D1-": (-1, -1),
+        "D2": (1, -1),
+        "D2-": (-1, 1)
+    }
+    def check(r, c, dr, dc):
+        for i in range(len(pattern)):
+            new_r = r + i * dr
+            new_c = c + i * dc
+
+            if new_r < 0 or new_r >= len(grid):
+                return False
+
+            if new_c < 0 or new_c >= len(grid[0]):
+                return False
+
+            if grid[new_r][new_c] != pattern[i]:
+                return False
+
+        return True
+
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            for direction, (dr, dc) in directions.items():
+
+                if check(r, c, dr, dc):
+                    result.append((r, c, direction))
+
+    return result
+
 print(prism_detector(["XYZ", "ABC", "DEF"], "XBF"))
 print(prism_detector(["ABC", "DEF", "GHI"], "ADG"))
 print(prism_detector(["HELLO", "WORLD"], "LL"))
